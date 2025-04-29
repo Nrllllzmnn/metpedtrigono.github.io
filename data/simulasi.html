@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulasi Trigonometri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      background-size: cover;
+    }
+    .simulation-container {
+      text-align: center;
+      padding: 20px;
+      border: 2px solid #ddd;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    canvas {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      background: #fff;
+    }
+    input[type="range"], input[type="number"] {
+      width: 100%;
+      padding: 5px;
+      margin: 5px 0 15px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005FA3;
+    }
+  </style>
+</head>
+<body>
+  <div class="simulation-container">
+    <h1>Simulasi Trigonometri</h1>
+    <p>Geser slider untuk mengubah sudut alfa dan ubah panjang hipotenusa.</p>
+
+    <label for="angleSlider">Sudut Alfa (°):</label>
+    <input type="range" id="angleSlider" min="0" max="90" value="45" step="1" oninput="updateSimulation()">
+    <p>Sudut Alfa: <span id="angleValue">45</span>°</p>
+
+    <label for="hypotenuseInput">Panjang Hipotenusa (cm):</label>
+    <input type="number" id="hypotenuseInput" value="10" min="1" step="0.1" onchange="updateSimulation()">
+
+    <canvas id="triangleCanvas" width="500" height="500"></canvas>
+
+    <button onclick="goBack()">Kembali ke media pembelajaran</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("triangleCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function drawTriangle(angle, hypotenuse) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const hypotenusePx = 250; // skala gambar
+      const scale = hypotenusePx / hypotenuse;
+
+      const angleInRadians = (angle * Math.PI) / 180;
+      const opposite = Math.sin(angleInRadians) * hypotenuse;
+      const adjacent = Math.cos(angleInRadians) * hypotenuse;
+
+      const startX = canvas.width / 2 - (adjacent * scale) / 2;
+      const startY = canvas.height / 2 + (opposite * scale) / 2;
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(startX + adjacent * scale, startY);
+      ctx.lineTo(startX + adjacent * scale, startY - opposite * scale);
+      ctx.closePath();
+      ctx.strokeStyle = "#0078D4";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Label sisi
+      ctx.fillStyle = "#333";
+      ctx.font = "16px Arial";
+      ctx.fillText(`Opposite: ${opposite.toFixed(2)} cm`, startX + adjacent * scale + 10, startY - (opposite * scale) / 2);
+      ctx.fillText(`Adjacent: ${adjacent.toFixed(2)} cm`, startX + (adjacent * scale) / 2 - 30, startY + 20);
+      ctx.fillText(`Hypotenuse: ${hypotenuse.toFixed(2)} cm`, startX + (adjacent * scale) / 2 - 60, startY - (opposite * scale) / 2 - 20);
+    }
+
+    function updateSimulation() {
+      const angle = document.getElementById("angleSlider").value;
+      const hypotenuse = document.getElementById("hypotenuseInput").value;
+      document.getElementById("angleValue").textContent = angle;
+      drawTriangle(angle, hypotenuse);
+    }
+
+    function goBack() {
+      window.location.href = "https://medpedbynz.github.io/";
+    }
+
+    // Inisialisasi simulasi
+    updateSimulation();
+  </script>
+</body>
+</html>
