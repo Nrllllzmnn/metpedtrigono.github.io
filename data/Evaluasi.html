@@ -100,19 +100,32 @@
       display: inline-block;
       padding: 0 4px;
     }
-     .home-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-     .home-button:hover {
-      background-color: #45a049;
-    }
+
+.home-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.home-button img {
+    width: 60px; /* Sesuaikan ukuran ikon */
+    height: auto;
+}
+.whatsapp-button {
+  display: inline-block;
+  margin-top: 15px;
+  background-color: #25D366;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
   </style>
 </head>
 <body>
@@ -125,6 +138,8 @@
     <button id="next-button">Berikutnya</button>
     <button id="retry-button">Ulangi</button>
     <p id="result"></p>
+    <a id="whatsapp-link" class="whatsapp-button" href="#" target="_blank" style="display: none;">Kirim Hasil ke WhatsApp</a>
+
   </div>
 
   <script>
@@ -443,7 +458,22 @@
     document.getElementById("next-button").addEventListener("click", showNextQuestion);
     document.getElementById("prev-button").addEventListener("click", showPreviousQuestion);
     document.getElementById("retry-button").addEventListener("click", initializeQuiz);
+    function showResult() {
+  const resultContainer = document.getElementById("result");
+  resultContainer.style.display = "block";
+  resultContainer.textContent = `Skor Anda: ${score} dari ${selectedQuestions.length * 10}`;
 
+  const whatsappLink = document.getElementById("whatsapp-link");
+  const message = `Assalamualaikum bapak Saya...... telah menyelesaikan kuis Trigonometri dan mendapatkan skor ${score} dari ${selectedQuestions.length * 10}`;
+  const encodedMessage = encodeURIComponent(message);
+  const phoneNumber = "6285975213222"; 
+  whatsappLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+  whatsappLink.style.display = "inline-block";
+
+  document.getElementById("retry-button").style.display = "inline-block";
+  document.getElementById("next-button").disabled = true;
+  document.getElementById("prev-button").disabled = true;
+}
     initializeQuiz();
   </script>
    <script>
@@ -454,7 +484,7 @@
 <script id="MathJax-script" async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <button class="home-button" onclick="goHome()">
-  <img src="data/tombol home.png" alt="Home">
+  <img src="https://nrllllzmnn.github.io/metpedtrigono.github.io/data/tombol%20home.png" alt="Home">
 </button>
 
 <script>
