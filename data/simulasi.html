@@ -1,209 +1,226 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simulasi Trigonometri</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #74ebd5, #9face6);
-    }
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simulasi Trigonometri</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(to right, #beeaf0b9, #d39bdd);
+        background-size: cover;
+      }
 
-    .simulation-container {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 300px;
-      max-width: 90%;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      z-index: 2;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: block;
-      z-index: 1;
-    }
-
-    input[type="range"], input[type="number"] {
-      width: 100%;
-      margin: 5px 0 15px;
-      padding: 8px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 16px;
-      background: #0078D4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #005FA3;
-    }
-
-    @media (max-width: 500px) {
       .simulation-container {
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 100%;
         width: 90%;
-        left: 5%;
-        right: 5%;
-        top: 10px;
-        padding: 12px;
+        box-sizing: border-box;
       }
 
-      input[type="range"], input[type="number"], button {
-        font-size: 14px;
+      canvas {
+        margin-top: 0px;
+
+        max-width: 100%;
+        height: auto;
       }
-    }
-  </style>
-</head>
-<body>
-  <canvas id="triangleCanvas"></canvas>
 
-  <div class="simulation-container">
-    <h2>Simulasi Trigonometri</h2>
-    <label>Sudut Alfa (°):</label>
-    <input type="range" id="angleSlider" min="0" max="90" value="45" step="1" oninput="updateSimulation()">
-    <p>Sudut Alfa: <span id="angleValue">45</span>°</p>
+      input[type="range"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 1px 0 1px;
+        font-size: 16px;
+      }
 
-    <label>Panjang Hipotenusa (cm):</label>
-    <input type="number" id="hypotenuseInput" value="10" min="1" step="0.1" onchange="updateSimulation()">
+      button {
+        margin-top: 0px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        max-width: 200px;
+      }
 
-    <button onclick="resetSimulation()">Reset</button>
-    <button onclick="goBack()">Kembali ke media pembelajaran</button>
-  </div>
+      button:hover {
+        background: #005fa3;
+      }
 
-  <script>
-    const canvas = document.getElementById("triangleCanvas");
-    const ctx = canvas.getContext("2d");
+      @media (max-width: 600px) {
+        .simulation-container {
+          width: 100%;
+          padding: 25px;
+        }
 
-    let currentAngle = 45;
-    let currentHypotenuse = 10;
-    let animationFrameId;
+        input[type="range"],
+        input[type="number"],
+        button {
+          font-size: 15px;
+        }
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      updateSimulation();
-    }
-
-    function drawTriangle(angle, hypotenuse) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const padding = 50;
-      const maxLength = Math.min(canvas.width, canvas.height) - padding * 2;
-      const scale = maxLength / hypotenuse;
-      const angleRad = (angle * Math.PI) / 180;
-      const opposite = Math.sin(angleRad) * hypotenuse;
-      const adjacent = Math.cos(angleRad) * hypotenuse;
-
-      const centerX = canvas.width / 2 + 60; // digeser ke kanan
-      const centerY = canvas.height / 2;
-
-      const startX = centerX - (adjacent * scale) / 2;
-      const startY = centerY + (opposite * scale) / 2;
-      const x1 = startX;
-      const y1 = startY;
-      const x2 = startX + adjacent * scale;
-      const y2 = startY;
-      const x3 = x2;
-      const y3 = y2 - opposite * scale;
-
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.lineTo(x3, y3);
-      ctx.lineTo(x1, y1);
-      ctx.strokeStyle = "#0078D4";
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      ctx.fillStyle = "#000";
-      ctx.font = "16px Arial";
-      ctx.fillText(`Adjacent: ${adjacent.toFixed(2)} cm`, (x1 + x2) / 2 - 40, y1 + 20);
-
-      const angleOpp = Math.atan2(y3 - y2, x3 - x2);
-      const offset = -30;
-      const oppCenterX = (x2 + x3) / 2;
-      const oppCenterY = (y2 + y3) / 2;
-      const labelX = oppCenterX + offset * Math.cos(angleOpp - Math.PI / 2);
-      const labelY = oppCenterY + offset * Math.sin(angleOpp - Math.PI / 2);
-
-      ctx.save();
-      ctx.translate(labelX, labelY);
-      ctx.rotate(angleOpp);
-      ctx.fillText(`Opposite: ${opposite.toFixed(2)} cm`, -50, -10);
-      ctx.restore();
-
-      const hypoCenterX = (x1 + x3) / 2;
-      const hypoCenterY = (y1 + y3) / 2;
-      const angleHypo = Math.atan2(y3 - y1, x3 - x1);
-      ctx.save();
-      ctx.translate(hypoCenterX, hypoCenterY);
-      ctx.rotate(angleHypo);
-      ctx.fillText(`Hypotenuse: ${hypotenuse.toFixed(2)} cm`, -60, -10);
-      ctx.restore();
-
-      ctx.fillText(`${angle.toFixed(0)}°`, x2 - 30, y2 - 5);
-    }
-
-    function updateSimulation() {
-      const targetAngle = parseFloat(document.getElementById("angleSlider").value);
-      const targetHypotenuse = parseFloat(document.getElementById("hypotenuseInput").value);
-      document.getElementById("angleValue").textContent = targetAngle;
-
-      const duration = 400;
-      const startTime = performance.now();
-
-      cancelAnimationFrame(animationFrameId);
-
-      function animate(time) {
-        const elapsed = time - startTime;
-        const t = Math.min(elapsed / duration, 1);
-        const angle = currentAngle + (targetAngle - currentAngle) * t;
-        const hypotenuse = currentHypotenuse + (targetHypotenuse - currentHypotenuse) * t;
-
-        drawTriangle(angle, hypotenuse);
-
-        if (t < 1) {
-          animationFrameId = requestAnimationFrame(animate);
-        } else {
-          currentAngle = targetAngle;
-          currentHypotenuse = targetHypotenuse;
+        canvas {
+          width: 100%;
+          height: auto;
         }
       }
 
-      animationFrameId = requestAnimationFrame(animate);
-    }
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+        gap: 10px;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="simulation-container">
+      <h1>Simulasi Trigonometri</h1>
+      <p>Geser slider untuk mengubah sudut alfa dan ubah panjang hipotenusa.</p>
 
-    function resetSimulation() {
-      document.getElementById("angleSlider").value = 45;
-      document.getElementById("hypotenuseInput").value = 10;
+      <label for="angleSlider">Sudut Alfa (°):</label>
+      <input
+        type="range"
+        id="angleSlider"
+        min="0"
+        max="90"
+        value="45"
+        step="1"
+        oninput="updateSimulation()"
+      />
+      <p>Sudut Alfa: <span id="angleValue">45</span>°</p>
+
+      <label for="hypotenuseInput">Panjang Hipotenusa (cm):</label>
+      <input
+        type="number"
+        id="hypotenuseInput"
+        value="10"
+        min="1"
+        step="0.1"
+        onchange="updateSimulation()"
+      />
+
+      <canvas id="triangleCanvas" width="400" height="400"></canvas>
+
+      <div class="button-container">
+        <button onclick="resetSimulation()">Reset</button>
+        <button onclick="goBack()">Kembali ke media pembelajaran</button>
+      </div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("triangleCanvas");
+      const ctx = canvas.getContext("2d");
+
+      function drawTriangle(angle, hypotenuse) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (hypotenuse <= 0) {
+          alert("Panjang hipotenusa harus lebih dari 0.");
+          return;
+        }
+
+        const hypotenusePx = 250;
+        const scale = hypotenusePx / hypotenuse;
+
+        const angleInRadians = (angle * Math.PI) / 180;
+        const opposite = Math.sin(angleInRadians) * hypotenuse;
+        const adjacent = Math.cos(angleInRadians) * hypotenuse;
+
+        const startX = canvas.width / 2 - (adjacent * scale) / 2;
+        const startY = canvas.height / 2 + (opposite * scale) / 2;
+
+        // Adjacent (bottom)
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(startX + adjacent * scale, startY);
+        ctx.strokeStyle = "#FF5733";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Opposite (vertical)
+        ctx.beginPath();
+        ctx.moveTo(startX + adjacent * scale, startY);
+        ctx.lineTo(startX + adjacent * scale, startY - opposite * scale);
+        ctx.strokeStyle = "#33C1FF";
+        ctx.stroke();
+
+        // Hypotenuse (miring)
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(startX + adjacent * scale, startY - opposite * scale);
+        ctx.strokeStyle = "#0078D4";
+        ctx.stroke();
+
+        // Label sisi
+        ctx.fillStyle = "#333";
+        ctx.font = "16px Arial";
+
+        // Adjacent (horizontal label)
+        ctx.fillText(
+          `Adjacent: ${adjacent.toFixed(2)} cm`,
+          startX + (adjacent * scale) / 2 - 30,
+          startY + 20
+        );
+
+        // Opposite (vertical label rotated)
+        ctx.save();
+        ctx.translate(
+          startX + adjacent * scale + 20,
+          startY - (opposite * scale) / 2 + 45
+        );
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText(`Opposite: ${opposite.toFixed(2)} cm`, 0, 0);
+        ctx.restore();
+
+        // Hypotenuse (rotated along the slope)
+        const hypoCenterX = (startX + startX + adjacent * scale) / 2;
+        const hypoCenterY = (startY + startY - opposite * scale) / 2;
+        const angleHypo = -Math.atan(opposite / adjacent);
+        ctx.save();
+        ctx.translate(hypoCenterX, hypoCenterY);
+        ctx.rotate(angleHypo);
+        ctx.fillText(`Hypotenuse: ${hypotenuse.toFixed(2)} cm`, -60, -10);
+        ctx.restore();
+
+        // Sudut
+        ctx.fillText(`${angle}°`, startX + adjacent * scale - 30, startY - 5);
+      }
+
+      function updateSimulation() {
+        const angle = parseFloat(document.getElementById("angleSlider").value);
+        const hypotenuse = parseFloat(
+          document.getElementById("hypotenuseInput").value
+        );
+        document.getElementById("angleValue").textContent = angle;
+        drawTriangle(angle, hypotenuse);
+      }
+
+      function resetSimulation() {
+        document.getElementById("angleSlider").value = 45;
+        document.getElementById("hypotenuseInput").value = 10;
+        updateSimulation();
+      }
+
+      function goBack() {
+        window.location.href =
+          "https://nrllllzmnn.github.io/metpedtrigono.github.io/";
+      }
+
       updateSimulation();
-    }
-
-    function goBack() {
-      window.location.href = "https://nrllllzmnn.github.io/metpedtrigono.github.io/";
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-  </script>
-</body>
+    </script>
+  </body>
 </html>
