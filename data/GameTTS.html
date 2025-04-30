@@ -8,15 +8,35 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            margin: 0;
+            background: linear-gradient(to right, #e0f7fa, #e1bee7); /* Gradasi warna */
+            min-height: 100vh;
         }
+    
         h1 {
             margin-bottom: 5px;
+            color: #333;
         }
-        .sumber {
+    
+        .sumber, .pembuat {
             font-size: 14px;
             color: #555;
+            margin-bottom: 5px;
+        }
+    
+        .pembuat {
             margin-bottom: 20px;
         }
+    
+        .pembuat a {
+            color: #007acc;
+            text-decoration: none;
+        }
+    
+        .pembuat a:hover {
+            text-decoration: underline;
+        }
+    
         .home-button {
             display: inline-block;
             margin-top: 20px;
@@ -27,24 +47,44 @@
             text-decoration: none;
             border-radius: 5px;
         }
+    
         .home-button:hover {
             background-color: #45a049;
         }
+    
+        .responsive-iframe-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+    
+        .responsive-iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    
         footer {
             margin-top: 40px;
             font-size: 14px;
             color: #777;
         }
-    </style>
+    </style>    
 </head>
 <body>
 
     <h1>Game Media Pembelajaran Matematika</h1>
     <div class="sumber">Sumber: Wordwall</div>
+    <div class="pembuat">Dibuat oleh: <a href="https://wordwall.net/id/teacher/1003359/jonipasaribu261" target="_blank">Jonipasaribu261</a></div>
 
-    <iframe style="max-width:100%" src="https://wordwall.net/embed/7a64fa9ffd3348579828e0f03cf76cdd?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
-
-    <br>
+    <div class="responsive-iframe-container">
+        <iframe src="https://wordwall.net/id/embed/a217e4e85cbe4a2b9cd4b656587da962?themeId=22&templateId=71&fontStackId=0" allowfullscreen></iframe>
+    </div>
 
     <a href="https://nrllllzmnn.github.io/metpedtrigono.github.io/" class="home-button">Home</a>
 
