@@ -3,20 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kuis Esai Trigonometri</title>
+    <title>Evaluasi Trigonometri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Comic+Relief:wght@400;700&family=Grenze:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Merienda:wght@300..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Quintessential&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://unpkg.com/mathlive"></script>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background: #f0f4f8;
+        font-family: "Grenze", serif;
         margin: 0;
-        padding: 2rem;
+        padding: 1rem;
+        background: linear-gradient(135deg, #74ebd5, #9face6);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
       }
+
       .container {
         padding: 20px;
         max-width: 900px;
         margin: auto;
-        background: white;
+        background: rgba(255, 255, 255, 0.524);
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
@@ -61,7 +73,7 @@
           ketinggian 600 meter, berapa jarak antara posisi pesawat sekarang
           dengan posisi pendaratannya yang ideal?
         </p>
-        <math-field id="jawaban1"></math-field>
+        <input type="file" id="file1" />
       </div>
 
       <div class="soal">
@@ -84,12 +96,12 @@
           <b>a.</b> Tentukan panjang rancangan jembatan yang seharusnya
           berdasarkan informasi yang ada!
         </p>
-        <math-field id="jawaban2a"></math-field>
+        <input type="file" id="file2a" />
         <p>
           <b>b.</b> Evaluasi strategi pengukuran ulang: sudut 36° dan jarak
           330,8 meter. Tepat atau tidak? Jelaskan.
         </p>
-        <math-field id="jawaban2b"></math-field>
+        <input type="file" id="file2b" />
       </div>
 
       <div class="soal">
@@ -107,13 +119,13 @@
           <b>a.</b> Jarak antara Dimas dan tiang bendera adalah 52 m. Cari
           panjang sisi depan berdasarkan sudut dan jarak yang diketahui
         </p>
-        <math-field id="jawaban3a"></math-field>
+        <input type="file" id="file3a" />
         <p>
           <b>b.</b> Teman Dimas beranggapan bahwa jawaban di bagian a merupakan
           tinggi tiang bendera yang sesungguhnya. Dimas tidak setuju dengan
           pernyataan itu. Bagaimana pendapat kalian? Jelaskan alasannya.
         </p>
-        <math-field id="jawaban3b"></math-field>
+        <input type="file" id="file3b" />
       </div>
 
       <div class="soal">
@@ -126,12 +138,12 @@
           <b>a.</b>
           <img src="Asesmen.files/image003.png" width="128" height="29" />
         </p>
-        <math-field id="jawaban4a"></math-field>
+        <input type="file" id="file4a" />
         <p>
           <b>b.</b>
           <img src="Asesmen.files/image004.png" width="134" height="30" />
         </p>
-        <math-field id="jawaban4b"></math-field>
+        <input type="file" id="file4b" />
       </div>
 
       <div class="soal">
@@ -140,12 +152,12 @@
           <b>a.</b>
           <img src="Asesmen.files/image005.png" width="82" height="28" />
         </p>
-        <math-field id="jawaban5a"></math-field>
+        <input type="file" id="file5a" />
         <p>
           <b>b.</b>
           <img src="Asesmen.files/image006.png" width="142" height="27" />
         </p>
-        <math-field id="jawaban5b"></math-field>
+        <input type="file" id="file5b" />
       </div>
 
       <button onclick="kirimJawaban()">Kirim Jawaban</button>
@@ -157,40 +169,23 @@
         const nama = document.getElementById("nama").value.trim();
         if (!nama) return alert("Isi nama lengkap terlebih dahulu.");
 
-        const data = {
-          nama: nama,
-          jawaban1: document.getElementById("jawaban1").value,
-          jawaban2a: document.getElementById("jawaban2a").value,
-          jawaban2b: document.getElementById("jawaban2b").value,
-          jawaban3a: document.getElementById("jawaban3a").value,
-          jawaban3b: document.getElementById("jawaban3b").value,
-          jawaban4a: document.getElementById("jawaban4a").value,
-          jawaban4b: document.getElementById("jawaban4b").value,
-          jawaban5a: document.getElementById("jawaban5a").value,
-          jawaban5b: document.getElementById("jawaban5b").value,
-        };
-
-        const isiFile = `Nama: ${data.nama}
-
-1. ${data.jawaban1}
-2a. ${data.jawaban2a}
-2b. ${data.jawaban2b}
-3a. ${data.jawaban3a}
-3b. ${data.jawaban3b}
-4a. ${data.jawaban4a}
-4b. ${data.jawaban4b}
-5a. ${data.jawaban5a}
-5b. ${data.jawaban5b}`;
+        const status = document.getElementById("status");
+        status.innerText = "Mengirim file...";
 
         const form = new FormData();
-        form.append(
-          "filename",
-          `Jawaban_${data.nama.replace(/\s+/g, "_")}_${Date.now()}.txt`
-        );
-        form.append("content", isiFile);
+        form.append("nama", nama);
 
-        const status = document.getElementById("status");
-        status.innerText = "Mengirim jawaban...";
+        for (let i = 1; i <= 5; i++) {
+          const fileInput = document.getElementById("file" + i);
+          if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            form.append(
+              "file_soal_" + i,
+              file,
+              `Soal${i}_${nama.replace(/\s+/g, "_")}_${file.name}`
+            );
+          }
+        }
 
         try {
           const res = await fetch(
@@ -202,8 +197,8 @@
           );
           const json = await res.json();
           const link = json.url;
-          status.innerHTML = `✅ Jawaban berhasil dikirim! <a href="\${link}" target="_blank">Lihat File</a><br><br><a href="https://wa.me/6285975213222?text=Assalamualaikum%20saya%20\${encodeURIComponent(data.nama)}%20telah%20mengirim%20jawaban%20kuis%20esai.%20Link:%20\${encodeURIComponent(link)}" target="_blank">Kirim ke WhatsApp</a>`;
-        } catch (e) {
+          status.innerHTML = `✅ Jawaban berhasil dikirim! <a href="\${link}" target="_blank">Lihat File</a>`;
+        } catch (err) {
           status.innerText = "❌ Gagal mengirim jawaban.";
         }
       }
