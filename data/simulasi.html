@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,20 +9,19 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #74ebd5, #9face6);
     }
 
     .simulation-container {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      max-width: 400px;
+      top: 20px;
+      left: 20px;
+      width: 300px;
+      max-width: 90%;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
-      padding: 20px;
+      padding: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       z-index: 2;
     }
@@ -58,6 +57,20 @@
 
     button:hover {
       background: #005FA3;
+    }
+
+    @media (max-width: 500px) {
+      .simulation-container {
+        width: 90%;
+        left: 5%;
+        right: 5%;
+        top: 10px;
+        padding: 12px;
+      }
+
+      input[type="range"], input[type="number"], button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -100,7 +113,7 @@
       const opposite = Math.sin(angleRad) * hypotenuse;
       const adjacent = Math.cos(angleRad) * hypotenuse;
 
-      const centerX = canvas.width / 2;
+      const centerX = canvas.width / 2 + 60; // digeser ke kanan
       const centerY = canvas.height / 2;
 
       const startX = centerX - (adjacent * scale) / 2;
@@ -112,24 +125,21 @@
       const x3 = x2;
       const y3 = y2 - opposite * scale;
 
-      // Segitiga
       ctx.beginPath();
       ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2); // adjacent
-      ctx.lineTo(x3, y3); // opposite
-      ctx.lineTo(x1, y1); // hypotenuse
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.lineTo(x1, y1);
       ctx.strokeStyle = "#0078D4";
       ctx.lineWidth = 3;
       ctx.stroke();
 
-      // Label Adjacent
       ctx.fillStyle = "#000";
       ctx.font = "16px Arial";
       ctx.fillText(`Adjacent: ${adjacent.toFixed(2)} cm`, (x1 + x2) / 2 - 40, y1 + 20);
 
-      // Label Opposite
-      const angleOpp = Math.atan2(y3 - y2, x3 - x2); // Sudut sisi opposite
-      const offset = -30; // Geser sedikit ke kanan dari sisi tegak
+      const angleOpp = Math.atan2(y3 - y2, x3 - x2);
+      const offset = -30;
       const oppCenterX = (x2 + x3) / 2;
       const oppCenterY = (y2 + y3) / 2;
       const labelX = oppCenterX + offset * Math.cos(angleOpp - Math.PI / 2);
@@ -141,7 +151,6 @@
       ctx.fillText(`Opposite: ${opposite.toFixed(2)} cm`, -50, -10);
       ctx.restore();
 
-      // Label Hypotenuse
       const hypoCenterX = (x1 + x3) / 2;
       const hypoCenterY = (y1 + y3) / 2;
       const angleHypo = Math.atan2(y3 - y1, x3 - x1);
@@ -151,7 +160,6 @@
       ctx.fillText(`Hypotenuse: ${hypotenuse.toFixed(2)} cm`, -60, -10);
       ctx.restore();
 
-      // Sudut
       ctx.fillText(`${angle.toFixed(0)}°`, x2 - 30, y2 - 5);
     }
 
@@ -168,7 +176,6 @@
       function animate(time) {
         const elapsed = time - startTime;
         const t = Math.min(elapsed / duration, 1);
-
         const angle = currentAngle + (targetAngle - currentAngle) * t;
         const hypotenuse = currentHypotenuse + (targetHypotenuse - currentHypotenuse) * t;
 
