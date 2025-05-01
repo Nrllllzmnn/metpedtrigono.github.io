@@ -221,7 +221,7 @@
             }
           );
           const json = await res.json();
-          const link = json.url;
+          const link = json.link;
           const waMessage = `Assalamualaikum, saya ${nama} telah mengirim file jawaban esai. Berikut linknya: ${link}`;
 
           status.innerHTML = `✅ Jawaban berhasil dikirim! <a href="${link}" target="_blank">Lihat File</a><br><br>Mengalihkan ke WhatsApp...`;
