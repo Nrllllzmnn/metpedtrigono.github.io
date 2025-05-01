@@ -175,21 +175,33 @@
         const form = new FormData();
         form.append("nama", nama);
 
-        for (let i = 1; i <= 5; i++) {
-          const fileInput = document.getElementById("file" + i);
-          if (fileInput.files.length > 0) {
+        // Ambil semua input file dari soal 1 s.d. 5a dan 5b
+        const ids = [
+          "file1",
+          "file2a",
+          "file2b",
+          "file3a",
+          "file3b",
+          "file4a",
+          "file4b",
+          "file5a",
+          "file5b",
+        ];
+        for (let id of ids) {
+          const fileInput = document.getElementById(id);
+          if (fileInput && fileInput.files.length > 0) {
             const file = fileInput.files[0];
             form.append(
-              "file_soal_" + i,
+              id,
               file,
-              `Soal${i}_${nama.replace(/\s+/g, "_")}_${file.name}`
+              `${id}_${nama.replace(/\s+/g, "_")}_${file.name}`
             );
           }
         }
 
         try {
           const res = await fetch(
-            "https://script.google.com/macros/s/AKfycbz_9cWjBvO9tHKXwRV8hOlo1BLm-3PE4BFuizvsjJhM97_b0fsyeJFIYIlZ0AJBhwbGjw/exec",
+            "https://script.google.com/macros/s/AKfycbxdfnGxT7PdUva0uCTs2otvIcszC3oLUBoSAi-xrdM11LucfEywNfruQoyTfMNXuoPoAQ/exec",
             {
               method: "POST",
               body: form,
@@ -197,7 +209,14 @@
           );
           const json = await res.json();
           const link = json.url;
-          status.innerHTML = `✅ Jawaban berhasil dikirim! <a href="\${link}" target="_blank">Lihat File</a>`;
+          const waMessage = `Assalamualaikum, saya ${nama} telah mengirim file jawaban esai. Berikut linknya: ${link}`;
+
+          status.innerHTML = `✅ Jawaban berhasil dikirim! <a href="${link}" target="_blank">Lihat File</a><br><br>Mengalihkan ke WhatsApp...`;
+
+          // Kirim link ke WhatsApp
+          window.open(
+            `https://wa.me/6285975213222?text=${encodeURIComponent(waMessage)}`
+          );
         } catch (err) {
           status.innerText = "❌ Gagal mengirim jawaban.";
         }
