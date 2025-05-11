@@ -111,10 +111,10 @@
       />
       <p>Sudut Alfa: <span id="angleValue">45</span>°</p>
 
-      <label for="hypotenuseInput">Panjang Hipotenusa (cm):</label>
+      <label for="sisimiringInput">Panjang Sisi Miring (cm):</label>
       <input
         type="number"
-        id="hypotenuseInput"
+        id="sisimiringInput"
         value="10"
         min="1"
         step="0.1"
@@ -133,20 +133,20 @@
       const canvas = document.getElementById("triangleCanvas");
       const ctx = canvas.getContext("2d");
 
-      function drawTriangle(angle, hypotenuse) {
+      function drawTriangle(angle, sisimiring) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (hypotenuse <= 0) {
-          alert("Panjang hipotenusa harus lebih dari 0.");
+        if (sisimiring <= 0) {
+          alert("Panjang Sisi Miring harus lebih dari 0.");
           return;
         }
 
-        const hypotenusePx = 400;
-        const scale = hypotenusePx / hypotenuse;
+        const sisimiringPx = 400;
+        const scale = sisimiringPx / sisimiring;
 
         const angleInRadians = (angle * Math.PI) / 180;
-        const opposite = Math.sin(angleInRadians) * hypotenuse;
-        const adjacent = Math.cos(angleInRadians) * hypotenuse;
+        const opposite = Math.sin(angleInRadians) * sisimiring;
+        const adjacent = Math.cos(angleInRadians) * sisimiring;
 
         const startX = canvas.width / 2 - (adjacent * scale) / 2;
         const startY = canvas.height / 2 + (opposite * scale) / 2;
@@ -179,19 +179,19 @@
 
         // Adjacent (horizontal label)
         ctx.fillText(
-          `Adjacent: ${adjacent.toFixed(2)} cm`,
-          startX + (adjacent * scale) / 2 - 30,
-          startY + 20
+          `Sisi Samping: ${adjacent.toFixed(2)} cm`,
+          startX + (adjacent * scale) / 2 - 90,
+          startY + 30
         );
 
         // Opposite (vertical label rotated)
         ctx.save();
         ctx.translate(
           startX + adjacent * scale + 20,
-          startY - (opposite * scale) / 2 + 45
+          startY - (opposite * scale) / 2 + 90
         );
         ctx.rotate(-Math.PI / 2);
-        ctx.fillText(`Opposite: ${opposite.toFixed(2)} cm`, 0, 0);
+        ctx.fillText(`Sisi Depan: ${opposite.toFixed(2)} cm`, 0, 0);
         ctx.restore();
 
         // Hypotenuse (rotated along the slope)
@@ -201,7 +201,7 @@
         ctx.save();
         ctx.translate(hypoCenterX, hypoCenterY);
         ctx.rotate(angleHypo);
-        ctx.fillText(`Hypotenuse: ${hypotenuse.toFixed(2)} cm`, -60, -10);
+        ctx.fillText(`Sisi Miring: ${sisimiring.toFixed(2)} cm`, -80, -10);
         ctx.restore();
 
         // Sudut
@@ -210,16 +210,16 @@
 
       function updateSimulation() {
         const angle = parseFloat(document.getElementById("angleSlider").value);
-        const hypotenuse = parseFloat(
-          document.getElementById("hypotenuseInput").value
+        const sisimiring = parseFloat(
+          document.getElementById("sisimiringInput").value
         );
         document.getElementById("angleValue").textContent = angle;
-        drawTriangle(angle, hypotenuse);
+        drawTriangle(angle, sisimiring);
       }
 
       function resetSimulation() {
         document.getElementById("angleSlider").value = 45;
-        document.getElementById("hypotenuseInput").value = 10;
+        document.getElementById("sisimiringInput").value = 10;
         updateSimulation();
       }
 
