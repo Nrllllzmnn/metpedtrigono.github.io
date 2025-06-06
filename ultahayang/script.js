@@ -215,7 +215,7 @@ function aktipesan3() {
 }
 function aktipesan4() {
   wallpaper.style = "transform: scale(1.5);";
-  kalimat.innerHTML = pesan4.innerHTML + "Cintaku" + " ❤️";
+  kalimat.innerHTML = pesan4.innerHTML + " Cintaku" + " ❤️";
   kalimat.style = "transform:scale(1.2)";
   setTimeout(aktipesan5, 1000);
 }
