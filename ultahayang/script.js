@@ -362,7 +362,7 @@ function checkslov() {
 
 async function pertanyaan() {
   var { isConfirmed: prtanya } = await swals.fire({
-    title: "sayangg" + " " + tanya,
+    title: "Sayangg" + " " + tanya,
     text: "" + opstanya,
     imageUrl: "" + fotostiker6.src,
     showCancelButton: true,

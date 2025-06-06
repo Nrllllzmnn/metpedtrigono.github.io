@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
-  <meta charset="UTF-8" />
-  <meta
+  <meta charset="UTF-8" /><meta
     content="width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5"
     name="viewport"
-  />
-  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  /><meta content="IE=edge" http-equiv="X-UA-Compatible" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,13 +37,18 @@
     <audio src="Gambar\musik.mp3" id="linkmp3" class="sembunyi"></audio>
 
     <div id="bodyblur">
-      <img src="Gambar\IMG-20250409-WA0040.jpg" id="wallpaper" />
+      <!-- Wallpaper --><img
+        src="Gambar\IMG-20250409-WA0040.jpg"
+        id="wallpaper"
+      />
       <div id="beneranblur"></div>
     </div>
 
     <div id="Content">
       <div id="kadoIn">
-        <img src="https://feeldreams.github.io/kadoin.png" />
+        <!-- Tombol Surat --><img
+          src="https://feeldreams.github.io/kadoin.png"
+        />
       </div>
       <p id="ket">Klik Kadonya!</p>
 
@@ -56,27 +59,22 @@
           id="fotostiker1"
         />
         <img
-          src="https://feeldreams.github.io/pandacoklat.gif"
+          src="Gambar\Happy Love You GIF by LINE FRIENDS.gif"
           id="fotostiker2"
         />
-        <img src="https://feeldreams.github.io/cilukba.gif" id="fotostiker3" />
-        <img
-          src="https://feeldreams.github.io/pandakuning.gif"
-          id="fotostiker4"
-        />
+        <img src="https://feeldreams.github.io/emawh.gif" id="fotostiker3" />
+        <img src="https://feeldreams.github.io/emawh.gif" id="fotostiker4" />
         <img src="https://feeldreams.github.io/emawh.gif" id="fotostiker5" />
-        <img
-          src="https://feeldreams.github.io/pandacoklat.gif"
-          id="fotostiker6"
-        />
+        <img src="https://feeldreams.github.io/emawh.gif" id="fotostiker6" />
       </div>
 
       <p id="halo" class="halo"></p>
 
       <div>
-        <blockquote id="bq" data-text="㋡">
-          <p id="kalimat">Aku Ada Sesuatu Nih 🥰</p>
-          <p id="pesan1">Klik 4 LOVE di Bawah! 😘</p>
+        <blockquote id="bq" data-text="🥳">
+          <p id="kalimat">Aku Ada Sesuatu Nih 😍</p>
+
+          <p id="pesan1">Klik 4 LOVE di Bawah! 🥰</p>
           <div id="kolombaru">
             <li id="lv1">🤍</li>
             <li id="lv2">🤍</li>
@@ -85,7 +83,8 @@
           </div>
 
           <p id="pesan2">Tunggu...</p>
-          <p id="pesan3">Selamat ulang tahun, cinta hatiku... 🎂❤️</p>
+          <!-- Pesan -->
+          <p id="pesan3">Selamat ulang tahun, cinta hatiku... 🎂</p>
           <p id="pesan4">Hari ini bumi berputar untuk merayakan kehadiranmu</p>
           <p id="pesan5" class="gaya2">
             Meski kita dipisahkan jarak dan waktu, hatiku selalu bersamamu —
@@ -100,9 +99,10 @@
             Jika rindu bisa menjelma peluk 🤗, aku ingin memelukmu seribu kali
             hari ini 💞.
           </p>
+
           <p id="pesan8" class="gaya2">
-            Jika cinta bisa melintasi jarak 🚀, maka cintaku sudah ada di
-            sampingmu sejak matahari terbit 🌅.
+            Sayangg andaikan cinta bisa melintasi jarak 🚀, maka cintaku sudah
+            ada di sampingmu sejak matahari terbit 🌅.
           </p>
           <p id="pesan9" class="gaya2">
             Semoga di usia baru ini 🎉, segala impianmu perlahan menjadi nyata
@@ -113,22 +113,20 @@
             depanmu — bukan lewat layar 📱❤️.
           </p>
 
+          <!-- Tombol Lanjut -->
           <p id="opsL">Klik untuk Lanjut</p>
         </blockquote>
       </div>
 
-      <!-- Tambahkan elemen untuk penghitung mundur -->
-      <div id="countdown" style="font-size: 24px; margin-top: 20px"></div>
+      <!-- Tombol Kirim Pesan -->
+      <div id="Tombol"><a id="By">&#128140; Lanjut</a></div>
 
-      <div id="Tombol">
-        <a id="By" style="pointer-events: none; opacity: 0.5"
-          >&#128140; Lanjut</a
-        >
-      </div>
+      <!-- Pesan Tambahan -->
       <p id="katatambahan" class="sembunyi">
         Kado nya ngutang dulu ya sayangg 😂🙏
       </p>
 
+      <!-- Pesan Ditolak -->
       <div id="pesanditolak">
         <img id="stikerditolak" src="https://feeldreams.github.io/weee.gif" />
         <p id="kataditolak">Yaudah kalo gamau mh 😜</p>
@@ -144,9 +142,11 @@
         timerProgressBar: true,
         imageHeight: 90,
       });
-      const audio = new Audio("" + linkmp3.src);
-      let fungsiAwal = 0;
-
+      audio = new Audio("" + linkmp3.src);
+      ftganti = 0;
+      fungsi = 0;
+      fungsiAwal = 0;
+      deffotostiker = fotostiker.src;
       function berjatuhan() {
         const heart = document.createElement("div");
         heart.className = "fas fa-snowflake";
@@ -154,15 +154,18 @@
         heart.style.animationDuration = Math.random() * 3 + 2 + "s";
         body.appendChild(heart);
       }
-
-      setInterval(function () {
+      setInterval(function name(params) {
         var heartArr = document.querySelectorAll(".fa-snowflake");
         if (heartArr.length > 100) {
           heartArr[0].remove();
         }
       }, 100);
-
       Content.style = "opacity:1;margin-top:16vh";
+      const swals = Swal.mixin({
+        allowOutsideClick: false,
+        cancelButtonColor: "#FF0040",
+        imageHeight: 80,
+      });
 
       document.getElementById("kadoIn").onclick = function () {
         if (fungsiAwal == 0) {
@@ -177,11 +180,27 @@
         }
       };
 
-      // Hapus prompt dan langsung tampilkan nama
       function inipesan() {
         const nama = "Sayanggku Oca Rosita Anwari"; // Nama yang ingin ditampilkan
         vketikhalo = "Hai, " + nama + " ✨"; // Menampilkan nama
         mulainama();
+      }
+
+      //Variable Pertanyaan Akhir
+      var tanya = "Mau Kado Gak Nih? 😶";
+      var opstanya = "Ayo jawab 😆";
+      var tompositif = "Mau";
+      var tomnegatif = "Engga";
+
+      async function menuju() {
+        pesanwhatsapp = "Makasii udah ngucapin " + nama + " ultah ><";
+        await swals.fire(
+          "OK!",
+          "Kirim jawabannya ke WhatsApp aku, ya!",
+          "success"
+        );
+        window.location =
+          "https://api.whatsapp.com/send?phone=6285975213222" + pesanwhatsapp;
       }
     </script>
     <script src="script.js"></script>
