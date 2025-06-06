@@ -387,3 +387,28 @@ async function pertanyaan() {
     aktipesan8();
   }
 }
+async function menuju() {
+  const nama = "Oca Rosita Anwari";
+  const pesanwhatsapp = encodeURIComponent(`Terima kasih, cintaku... 🥺❤️
+
+Setiap kata darimu adalah pelukan hangat yang menembus jarak, 
+membuat hariku terasa utuh meski tanpamu di sampingku.
+
+Aku juga merindukanmu—setiap pagi, setiap malam, 
+dan di detik ini aku cuma ingin bilang: 
+doamu selalu jadi kekuatan terbesarku 💪🌟.
+
+Cinta ini nggak pernah berkurang, malah tumbuh di setiap jarak yang kita lewati. 
+Semoga waktu segera berpihak, 
+dan kita bisa saling mengucapkan semuanya langsung…
+tanpa layar, tanpa jeda, hanya kita berdua 🤍✨
+
+Aku juga mencintaimu, lebih dari kata-kata bisa ceritakan 💌.`);
+
+  await Swal.fire("OK!", "Kirim jawabannya ke WhatsApp aku, ya!", "success");
+
+  const link =
+    "https://api.whatsapp.com/send?phone=6285975213222&text=" + pesanwhatsapp;
+
+  window.location.href = link;
+}
