@@ -101,8 +101,8 @@
           </p>
 
           <p id="pesan8" class="gaya2">
-            Sayangg andaikan cinta bisa melintasi jarak 🚀, maka cintaku sudah
-            ada di sampingmu sejak matahari terbit 🌅.
+            Sayangg andaikan aku bisa melintasi jarak dan waktu 🚀, maka diriku
+            sudah ada di sampingmu sejak matahari terbit 🌅.
           </p>
           <p id="pesan9" class="gaya2">
             Semoga di usia baru ini 🎉, segala impianmu perlahan menjadi nyata
@@ -193,14 +193,21 @@
       var tomnegatif = "Engga";
 
       async function menuju() {
-        pesanwhatsapp = "Makasii udah ngucapin " + nama + " ultah ><";
+        const nama = "Oca Rosita Anwari"; // pastikan variabel nama tersedia
+        const pesanwhatsapp = "Makasii udah ngucapin " + nama + " ultah ><";
         await swals.fire(
           "OK!",
           "Kirim jawabannya ke WhatsApp aku, ya!",
           "success"
         );
-        window.location =
-          "https://api.whatsapp.com/send?phone=6285975213222" + pesanwhatsapp;
+
+        const nomor = "6285975213222";
+        const url =
+          "https://api.whatsapp.com/send?phone=" +
+          nomor +
+          "&text=" +
+          encodeURIComponent(pesanwhatsapp);
+        window.location.href = url;
       }
     </script>
     <script src="script.js"></script>

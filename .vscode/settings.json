@@ -1,3 +1,4 @@
 {
-  "livePreview.defaultPreviewPath": "/dataex/simulasi.html"
+  "livePreview.defaultPreviewPath": "/dataex/simulasi.html",
+  "liveServer.settings.port": 5501
 }
